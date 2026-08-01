@@ -350,21 +350,12 @@ const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz37_j96gtqBwC
 
 // Este bloco substitui a "memória do Claude" por pedidos à tua Google Sheet.
 // Todo o resto do código continua a chamar window.storage.get/set exatamente como antes.
-// Otimização: em vez de um pedido por cada "chave" (o que era lento com a foto em várias partes),
-// vai-se buscar tudo de uma vez ao carregar a página, e fica guardado em memória.
-let remoteCache = null;
-async function fetchAllData(){
-  const res = await fetch(APPS_SCRIPT_URL);
-  remoteCache = await res.json();
-  return remoteCache;
-}
-
 window.storage = {
   async get(key){
-    if(!remoteCache){ await fetchAllData(); }
-    const value = remoteCache[key];
-    if(value === null || value === undefined || value === '') return null;
-    return { key, value };
+    const res = await fetch(`${APPS_SCRIPT_URL}?key=${encodeURIComponent(key)}`);
+    const data = await res.json();
+    if(data.value === null || data.value === undefined || data.value === '') return null;
+    return { key: data.key, value: data.value };
   },
   async set(key, value){
     const res = await fetch(APPS_SCRIPT_URL, {
@@ -372,7 +363,6 @@ window.storage = {
       headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita bloqueio de CORS do Apps Script
       body: JSON.stringify({ key, value })
     });
-    if(remoteCache) remoteCache[key] = value; // mantém a memória local atualizada
     return await res.json();
   }
 };
