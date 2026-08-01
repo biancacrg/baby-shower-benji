@@ -1,0 +1,921 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Baby Shower do Benjamim</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=Herr+Von+Muellerhoff&family=Lora:ital,wght@0,400;0,500;1,400&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#f4efe4;
+    --cream-2:#eee7d8;
+    --navy:#1f3b57;
+    --navy-2:#2c4a6e;
+    --blue:#6f97bd;
+    --blue-soft:#a9c5de;
+    --tan:#c9a876;
+    --ink:#2c2a24;
+    --white:#fffdf8;
+    --radius:14px;
+    --shadow:0 6px 20px rgba(31,59,87,0.10);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:repeating-linear-gradient(
+      90deg,
+      var(--white) 0 28px,
+      var(--cream) 28px 56px
+    );
+    color:var(--ink);
+    font-family:'Lora',serif;
+    line-height:1.6;
+  }
+  h1,h2,h3{font-family:'Playfair Display',serif; color:var(--navy); margin:0;}
+  .script{font-family:'Herr Von Muellerhoff',cursive; color:var(--blue); line-height:1;}
+  .eyebrow{
+    font-family:'Poppins',sans-serif;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    font-size:.72rem;
+    color:var(--blue);
+    font-weight:600;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:0 24px;}
+
+  /* --- bow divider signature element --- */
+  .divider{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    max-width:520px;margin:0 auto;padding:6px 24px;
+  }
+  .divider-line{flex:1;height:1px;background:var(--blue-soft);}
+  .divider-bow{width:46px;height:auto;flex-shrink:0;}
+
+  /* --- hero --- */
+  .hero{
+    padding:56px 0 40px;
+    text-align:center;
+    position:relative;
+  }
+  .hero .eyebrow{display:block;margin-bottom:6px;}
+  .hero h1{font-size:2.6rem;letter-spacing:.03em;}
+  .hero .script{font-size:5rem;display:block;margin:6px 0 18px;}
+  .details{
+    text-align:center;
+    margin-top:18px;
+  }
+  .details .date-line{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--navy);}
+  .details .time-line{font-family:'Poppins',sans-serif;font-size:.95rem;color:var(--navy-2);margin-top:4px;}
+  .location{margin-top:22px;font-family:'Poppins',sans-serif;color:var(--navy-2);font-size:.95rem;}
+  .location a{color:var(--navy-2);}
+  .maps-link{margin-top:6px;font-family:'Poppins',sans-serif;font-size:.85rem;}
+  .maps-link a{color:var(--blue);text-decoration:underline;}
+  .rsvp-note{margin-top:10px;font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--ink);opacity:.75;}
+
+  /* --- about --- */
+  .about{padding:20px 0 30px;text-align:center;}
+  .about p{max-width:620px;margin:0 auto;font-size:1.05rem;}
+
+  .photo-wrap{padding:0 0 30px;text-align:center;}
+  .photo-wrap img{
+    display:block;width:100%;max-width:300px;height:auto;margin:0 auto;
+    border-radius:var(--radius);box-shadow:var(--shadow);
+  }
+  .photo-placeholder{
+    width:100%;max-width:300px;margin:0 auto;padding:42px 20px;border:1.5px dashed var(--blue-soft);
+    border-radius:var(--radius);color:var(--blue);font-family:'Poppins',sans-serif;font-size:.9rem;
+  }
+  .photo-preview{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .photo-preview img{max-width:140px;border-radius:8px;box-shadow:var(--shadow);}
+
+  /* --- gifts --- */
+  .gifts{padding:20px 0 70px;}
+  .gifts h2{text-align:center;font-size:1.9rem;margin-bottom:6px;}
+  .gifts .sub{text-align:center;font-family:'Poppins',sans-serif;font-size:.9rem;color:var(--navy-2);margin-bottom:32px;}
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:20px;
+  }
+  .card{
+    background:var(--white);
+    border:1px solid var(--cream-2);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px;
+    display:flex;flex-direction:column;
+    gap:10px;
+  }
+  .card.taken{opacity:.62;}
+  .card h3{font-size:1.12rem;line-height:1.3;}
+  .card .desc{font-size:.92rem;color:var(--ink);opacity:.85;flex-grow:1;}
+  .card .price{
+    font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--navy-2);font-weight:600;
+  }
+  .card .link{
+    font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--blue);text-decoration:underline;
+  }
+  .card .actions{display:flex;flex-direction:column;gap:8px;margin-top:6px;}
+  .btn{
+    font-family:'Poppins',sans-serif;font-size:.85rem;font-weight:600;
+    padding:10px 14px;border-radius:999px;border:1.5px solid var(--navy-2);
+    background:var(--navy-2);color:var(--white);cursor:pointer;
+    transition:background .15s ease, color .15s ease, transform .1s ease;
+  }
+  .btn:hover{transform:translateY(-1px);}
+  .btn.secondary{background:transparent;color:var(--navy-2);}
+  .btn:focus-visible{outline:3px solid var(--tan);outline-offset:2px;}
+  .taken-tag{
+    font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--navy);
+    background:var(--cream-2);padding:8px 12px;border-radius:8px;text-align:center;
+  }
+  .edit-row{display:flex;flex-direction:column;gap:8px;}
+  .edit-row input, .edit-row textarea{
+    font-family:'Poppins',sans-serif;font-size:.85rem;padding:8px 10px;
+    border:1px solid var(--blue-soft);border-radius:8px;width:100%;
+  }
+  .edit-row textarea{resize:vertical;min-height:56px;}
+  .edit-mini-row{display:flex;gap:8px;}
+  .edit-mini-row input{flex:1;}
+
+  .add-card{
+    display:flex;align-items:center;justify-content:center;
+    border:1.5px dashed var(--blue-soft);color:var(--blue);
+    font-family:'Poppins',sans-serif;font-weight:600;cursor:pointer;min-height:120px;
+  }
+
+  .import-row{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    justify-content:center;margin-bottom:24px;
+  }
+  .import-row label.btn{cursor:pointer;}
+  .import-help{
+    font-family:'Poppins',sans-serif;font-size:.82rem;color:var(--blue);text-decoration:underline;cursor:pointer;
+  }
+  .qty-note{font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);opacity:.8;}
+  .claim-list{display:flex;flex-wrap:wrap;gap:6px;}
+  .claim-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    background:var(--cream-2);color:var(--navy);
+    font-family:'Poppins',sans-serif;font-size:.8rem;
+    padding:5px 6px 5px 10px;border-radius:999px;
+  }
+  .claim-tag button{
+    background:none;border:none;color:var(--navy-2);cursor:pointer;
+    font-size:.85rem;line-height:1;padding:2px;
+  }
+  .claim-tag button:focus-visible{outline:2px solid var(--tan);outline-offset:1px;}
+
+  footer{
+    text-align:center;padding:30px 0 50px;font-family:'Poppins',sans-serif;
+    font-size:.85rem;color:var(--navy-2);
+  }
+  footer p{margin:0;}
+  .gear{
+    position:fixed;bottom:18px;right:18px;
+    width:44px;height:44px;border-radius:50%;
+    background:var(--navy);color:var(--white);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;box-shadow:var(--shadow);font-size:1.2rem;
+    border:none;
+  }
+  .gear:focus-visible{outline:3px solid var(--tan);outline-offset:2px;}
+  .edit-banner{
+    background:var(--navy);color:var(--white);text-align:center;
+    font-family:'Poppins',sans-serif;font-size:.85rem;padding:8px;
+    position:sticky;top:0;z-index:10;
+  }
+  .edit-banner button{
+    margin-left:10px;background:var(--tan);color:var(--navy);border:none;
+    padding:5px 12px;border-radius:999px;font-weight:600;cursor:pointer;font-family:'Poppins',sans-serif;
+  }
+  .hidden{display:none !important;}
+  .hero-edit{max-width:520px;margin:0 auto;}
+  .toast{
+    position:fixed;bottom:76px;right:18px;background:var(--navy);color:var(--white);
+    padding:10px 16px;border-radius:8px;font-family:'Poppins',sans-serif;font-size:.85rem;
+    box-shadow:var(--shadow);opacity:0;transform:translateY(6px);transition:opacity .2s, transform .2s;
+    pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .btn, .toast, .loading-overlay{transition:none;}
+  }
+  @media (max-width:600px){
+    .hero h1{font-size:2rem;}
+    .hero .script{font-size:3.6rem;}
+    .details .date-line{font-size:1.2rem;}
+  }
+
+  .loading-overlay{
+    position:fixed;inset:0;background:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    z-index:200;opacity:1;visibility:visible;
+    transition:opacity .4s ease, visibility .4s ease;
+  }
+  .loading-overlay.hide{opacity:0;visibility:hidden;pointer-events:none;}
+  .loading-content{text-align:center;}
+  .loading-content .bow{width:90px;height:auto;display:block;margin:0 auto;}
+  .loading-text{
+    font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--navy-2);
+    margin-top:8px;letter-spacing:.04em;
+  }
+
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(31,59,87,0.45);
+    display:flex;align-items:center;justify-content:center;
+    padding:20px;z-index:100;
+  }
+  .modal-box{
+    background:var(--white);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:26px;max-width:360px;width:100%;
+  }
+  .modal-box h3{font-size:1.2rem;margin-bottom:8px;}
+  .modal-box p{font-family:'Poppins',sans-serif;font-size:.88rem;color:var(--ink);opacity:.8;margin:0 0 14px;}
+  .modal-box input{
+    font-family:'Poppins',sans-serif;font-size:.9rem;padding:9px 12px;
+    border:1px solid var(--blue-soft);border-radius:8px;width:100%;margin-bottom:16px;
+  }
+  .modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+</style>
+</head>
+<body>
+
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-content">
+    <svg class="bow" viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M70 42 C 54 14, 16 12, 14 34 C 12 54, 40 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M70 42 C 86 14, 124 12, 126 34 C 128 54, 100 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M65 40 C 60 46, 60 52, 64 58" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M75 40 C 80 46, 80 52, 76 58" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round"/>
+      <circle cx="70" cy="41" r="6" fill="#2c4a6e"/>
+    </svg>
+    <div class="loading-text">a preparar a página…</div>
+  </div>
+</div>
+
+<div class="edit-banner hidden" id="editBanner">
+  Modo anfitriã ativo — as alterações ficam visíveis para todos
+  <button id="exitEditBtn">Sair do modo edição</button>
+</div>
+
+<div class="wrap">
+  <header class="hero" id="heroSection">
+    <span class="eyebrow">Estão convidados para o</span>
+    <h1>Baby Shower</h1>
+    <span class="script">Benjamim</span>
+
+    <div class="details">
+      <div class="date-line">04 de outubro de 2026</div>
+      <div class="time-line">das 13h às 19h</div>
+    </div>
+
+    <div class="location">
+      📍 S'tança Garten — Montijo
+    </div>
+    <div class="rsvp-note" id="aboutRsvp">Por favor, confirma a tua presença até 20 de setembro.</div>
+  </header>
+
+  <div class="divider">
+    <span class="divider-line"></span>
+    <svg class="divider-bow" viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M70 42 C 54 14, 16 12, 14 34 C 12 54, 40 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M70 42 C 86 14, 124 12, 126 34 C 128 54, 100 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M65 40 C 60 49, 58 62, 62 76" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round"/>
+      <path d="M75 40 C 80 49, 82 62, 78 76" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="70" cy="41" r="8" fill="#2c4a6e"/>
+    </svg>
+    <span class="divider-line"></span>
+  </div>
+
+  <section class="about" id="aboutSection">
+    <p id="aboutText">Estamos cheios de alegria à espera do Benjamim, e adoraríamos ter-vos connosco para celebrar este momento. Aqui encontram todos os detalhes do dia e, se quiserem, uma lista de presentes organizada para ajudar quem preferir escolher algo com significado.</p>
+  </section>
+
+  <div class="photo-wrap" id="photoWrap">
+    <div class="photo-placeholder" id="photoPlaceholder">Espaço para foto — adiciona uma foto no modo edição</div>
+  </div>
+
+  <div class="divider">
+    <span class="divider-line"></span>
+    <svg class="divider-bow" viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M70 42 C 54 14, 16 12, 14 34 C 12 54, 40 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M70 42 C 86 14, 124 12, 126 34 C 128 54, 100 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M65 40 C 60 49, 58 62, 62 76" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round"/>
+      <path d="M75 40 C 80 49, 82 62, 78 76" fill="none" stroke="#2c4a6e" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="70" cy="41" r="8" fill="#2c4a6e"/>
+    </svg>
+    <span class="divider-line"></span>
+  </div>
+
+  <section class="gifts">
+    <h2>Lista de Presentes</h2>
+    <div class="sub">Escolhe um item para oferecer — fica marcado como escolhido para os outros convidados</div>
+    <div class="import-row edit-only hidden" id="importRow">
+      <label class="btn secondary" for="importFileInput">📥 Importar lista (Excel/CSV)</label>
+      <input type="file" id="importFileInput" accept=".xlsx,.xls,.csv" class="hidden">
+      <a class="import-help" href="#" id="importHelpLink">Ver formato esperado</a>
+    </div>
+    <div class="grid" id="giftGrid"></div>
+    <div class="grid" style="margin-top:20px;">
+      <div class="add-card edit-only hidden" id="addGiftCard">+ Adicionar presente</div>
+    </div>
+  </section>
+
+  <footer>
+    <p id="footerText">Com muito carinho, obrigada por fazerem parte deste dia 🤍</p>
+  </footer>
+</div>
+
+<button class="gear" id="gearBtn" title="Modo anfitriã">⚙</button>
+<div class="toast" id="toast"></div>
+
+<div class="modal-overlay hidden" id="modalOverlay">
+  <div class="modal-box">
+    <h3 id="modalTitle"></h3>
+    <p id="modalMessage"></p>
+    <input id="modalInput" type="text" class="hidden">
+    <div class="modal-actions">
+      <button id="modalCancel" class="btn secondary">Cancelar</button>
+      <button id="modalConfirm" class="btn">Confirmar</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script>
+// ⬇️ Cola aqui o URL do teu Web App do Google Apps Script (termina em /exec)
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyz37_j96gtqBwCbPS_TwFtlGVLjhlNbhnSyhwWBBfP95Ls5lHbRZZMD5ytyqL_FBez/exec";
+
+// Este bloco substitui a "memória do Claude" por pedidos à tua Google Sheet.
+// Todo o resto do código continua a chamar window.storage.get/set exatamente como antes.
+// Otimização: em vez de um pedido por cada "chave" (o que era lento com a foto em várias partes),
+// vai-se buscar tudo de uma vez ao carregar a página, e fica guardado em memória.
+let remoteCache = null;
+async function fetchAllData(){
+  const res = await fetch(APPS_SCRIPT_URL);
+  remoteCache = await res.json();
+  return remoteCache;
+}
+
+window.storage = {
+  async get(key){
+    if(!remoteCache){ await fetchAllData(); }
+    const value = remoteCache[key];
+    if(value === null || value === undefined || value === '') return null;
+    return { key, value };
+  },
+  async set(key, value){
+    const res = await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' }, // evita bloqueio de CORS do Apps Script
+      body: JSON.stringify({ key, value })
+    });
+    if(remoteCache) remoteCache[key] = value; // mantém a memória local atualizada
+    return await res.json();
+  }
+};
+
+const SHARED = true;
+const PASSPHRASE = "benjamim2026"; // muda este código para o que quiseres usar
+
+const defaultItems = [
+  {id:"1", name:"Cadeira auto (base ISOFIX)", description:"Sistema de retenção para os primeiros meses, compatível com a base ISOFIX.", priceMin:150, priceMax:280, link:"", quantity:1, claimedBy:[]},
+  {id:"2", name:"Baby monitor", description:"Monitor de vídeo e som para acompanhar o Benjamim a dormir.", priceMin:60, priceMax:150, link:"", quantity:1, claimedBy:[]},
+  {id:"3", name:"Banheira para bebé", description:"Banheira ergonómica com apoio, para o banho dos primeiros meses.", priceMin:25, priceMax:60, link:"", quantity:1, claimedBy:[]},
+  {id:"4", name:"Sacos de dormir (conjunto)", description:"Sacos de dormir para diferentes estações, tamanho recém-nascido.", priceMin:20, priceMax:45, link:"", quantity:1, claimedBy:[]},
+  {id:"5", name:"Almofada de amamentação", description:"Apoio para amamentação e também útil para o bebé se sentar mais tarde.", priceMin:25, priceMax:50, link:"", quantity:1, claimedBy:[]},
+  {id:"6", name:"Kit de musselinas", description:"Panos multiusos em algodão, essenciais no dia a dia com bebé.", priceMin:10, priceMax:25, link:"", quantity:1, claimedBy:[]}
+];
+
+function normalizeItem(item){
+  const quantity = item.quantity ? Number(item.quantity) || 1 : 1;
+  const claimedBy = item.claimedBy ? item.claimedBy : (item.selectedBy ? [item.selectedBy] : []);
+  return { ...item, quantity, claimedBy };
+}
+
+const defaultHero = {
+  eyebrow: "Estão convidados para o",
+  title: "Baby Shower",
+  name: "Benjamim",
+  dateText: "04 de outubro de 2026",
+  timeText: "das 13h às 19h",
+  location: "S'tança Garten — Montijo",
+  mapsLink: ""
+};
+
+const defaultAbout = {
+  text: "Estamos cheios de alegria à espera do Benjamim, e adoraríamos ter-vos connosco para celebrar este momento. Aqui encontram todos os detalhes do dia e, se quiserem, uma lista de presentes organizada para ajudar quem preferir escolher algo com significado.",
+  rsvp: "Por favor, confirma a tua presença até 20 de setembro.",
+  photo: "",
+  footerText: "Com muito carinho, obrigada por fazerem parte deste dia 🤍"
+};
+
+let state = { about: null, photo: null, items: null, hero: null };
+let editMode = false;
+
+function showModal({title, message, withInput=false, inputPlaceholder='', inputType='text', confirmText='Confirmar'}){
+  return new Promise(resolve=>{
+    const overlay = document.getElementById('modalOverlay');
+    const input = document.getElementById('modalInput');
+    document.getElementById('modalTitle').textContent = title || '';
+    document.getElementById('modalMessage').textContent = message || '';
+    document.getElementById('modalConfirm').textContent = confirmText;
+
+    if(withInput){
+      input.classList.remove('hidden');
+      input.type = inputType;
+      input.value = '';
+      input.placeholder = inputPlaceholder;
+    } else {
+      input.classList.add('hidden');
+    }
+
+    overlay.classList.remove('hidden');
+    if(withInput) setTimeout(()=>input.focus(), 30);
+
+    const confirmBtn = document.getElementById('modalConfirm');
+    const cancelBtn = document.getElementById('modalCancel');
+
+    function cleanup(val){
+      overlay.classList.add('hidden');
+      confirmBtn.removeEventListener('click', onConfirm);
+      cancelBtn.removeEventListener('click', onCancel);
+      input.removeEventListener('keydown', onKey);
+      resolve(val);
+    }
+    function onConfirm(){ cleanup(withInput ? input.value.trim() : true); }
+    function onCancel(){ cleanup(null); }
+    function onKey(e){
+      if(e.key === 'Enter'){ e.preventDefault(); onConfirm(); }
+      if(e.key === 'Escape'){ onCancel(); }
+    }
+    confirmBtn.addEventListener('click', onConfirm);
+    cancelBtn.addEventListener('click', onCancel);
+    input.addEventListener('keydown', onKey);
+  });
+}
+
+function toast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+function money(min,max){
+  return `€${min} – €${max}`;
+}
+
+const PHOTO_CHUNK_SIZE = 40000; // margem de segurança abaixo do limite de 50.000 carateres por célula da Sheet
+
+function resizeImageToDataUrl(file, maxWidth=900, quality=0.75){
+  return new Promise((resolve, reject)=>{
+    const reader = new FileReader();
+    reader.onload = (e)=>{
+      const img = new Image();
+      img.onload = ()=>{
+        let w = img.width, h = img.height;
+        if(w > maxWidth){ h = Math.round(h * (maxWidth / w)); w = maxWidth; }
+        const canvas = document.createElement('canvas');
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+async function savePhotoChunks(dataUrl){
+  const chunks = [];
+  for(let i=0; i<dataUrl.length; i+=PHOTO_CHUNK_SIZE){ chunks.push(dataUrl.slice(i, i+PHOTO_CHUNK_SIZE)); }
+  await window.storage.set('site-photo-count', String(chunks.length), SHARED);
+  for(let i=0; i<chunks.length; i++){
+    await window.storage.set('site-photo-chunk-' + i, chunks[i], SHARED);
+  }
+}
+
+async function loadPhotoChunks(){
+  try{
+    const countRes = await window.storage.get('site-photo-count', SHARED);
+    const count = countRes ? parseInt(countRes.value, 10) : 0;
+    if(!count) return '';
+    let combined = '';
+    for(let i=0; i<count; i++){
+      const chunkRes = await window.storage.get('site-photo-chunk-' + i, SHARED);
+      combined += chunkRes ? chunkRes.value : '';
+    }
+    return combined;
+  }catch(e){ return ''; }
+}
+
+async function deletePhotoChunks(){
+  await window.storage.set('site-photo-count', '0', SHARED);
+}
+
+async function loadState(){
+  try{
+    const itemsRes = await window.storage.get('gift-items', SHARED);
+    state.items = (itemsRes ? JSON.parse(itemsRes.value) : defaultItems).map(normalizeItem);
+  }catch(e){ state.items = defaultItems; }
+
+  try{
+    const aboutRes = await window.storage.get('site-about', SHARED);
+    state.about = aboutRes ? JSON.parse(aboutRes.value) : null;
+  }catch(e){ state.about = null; }
+
+  try{
+    const heroRes = await window.storage.get('site-hero', SHARED);
+    state.hero = heroRes ? JSON.parse(heroRes.value) : null;
+  }catch(e){ state.hero = null; }
+
+  try{
+    state.photo = await loadPhotoChunks();
+  }catch(e){ state.photo = ''; }
+
+  renderHeroView();
+  renderAboutView();
+  renderGifts();
+
+  const overlay = document.getElementById('loadingOverlay');
+  if(overlay) overlay.classList.add('hide');
+}
+
+function renderAboutView(){
+  const a = { ...defaultAbout, ...(state.about || {}) };
+  document.getElementById('aboutSection').innerHTML = `<p id="aboutText">${escapeHtml(a.text)}</p>`;
+  const rsvpEl = document.getElementById('aboutRsvp');
+  if(rsvpEl) rsvpEl.textContent = a.rsvp;
+  const footerEl = document.getElementById('footerText');
+  if(footerEl) footerEl.textContent = a.footerText;
+  const photoSrc = state.photo || a.photo;
+  if(photoSrc){
+    document.getElementById('photoWrap').innerHTML = `<img src="${escapeAttr(photoSrc)}" alt="Foto do casal/bebé">`;
+  } else {
+    document.getElementById('photoWrap').innerHTML = `<div class="photo-placeholder" id="photoPlaceholder">Espaço para foto — adiciona uma foto no modo edição</div>`;
+  }
+}
+
+function renderHeroView(){
+  const h = { ...defaultHero, ...(state.hero || {}) };
+  const a = { ...defaultAbout, ...(state.about || {}) };
+  document.getElementById('heroSection').innerHTML = `
+    <span class="eyebrow">${escapeHtml(h.eyebrow)}</span>
+    <h1>${escapeHtml(h.title)}</h1>
+    <span class="script">${escapeHtml(h.name)}</span>
+    <div class="details">
+      <div class="date-line">${escapeHtml(h.dateText)}</div>
+      <div class="time-line">${escapeHtml(h.timeText)}</div>
+    </div>
+    <div class="location">📍 ${escapeHtml(h.location)}</div>
+    ${h.mapsLink ? `<div class="maps-link"><a href="${escapeAttr(h.mapsLink)}" target="_blank" rel="noopener">Ver localização no Google Maps →</a></div>` : ''}
+    <div class="rsvp-note" id="aboutRsvp">${escapeHtml(a.rsvp)}</div>
+  `;
+}
+
+function renderHeroEdit(){
+  const h = { ...defaultHero, ...(state.hero || {}) };
+  document.getElementById('heroSection').innerHTML = `
+    <div class="hero-edit edit-row">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Texto pequeno acima do título</label>
+      <input id="heroEyebrow" type="text" value="${escapeAttr(h.eyebrow)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Título</label>
+      <input id="heroTitle" type="text" value="${escapeAttr(h.title)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Nome do bebé</label>
+      <input id="heroName" type="text" value="${escapeAttr(h.name)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Data (ex: 04 de outubro de 2026)</label>
+      <input id="heroDateText" type="text" value="${escapeAttr(h.dateText)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Horário (ex: das 13h às 19h)</label>
+      <input id="heroTimeText" type="text" value="${escapeAttr(h.timeText)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Local</label>
+      <input id="heroLocation" type="text" value="${escapeAttr(h.location)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Link do Google Maps (opcional)</label>
+      <input id="heroMapsLink" type="text" value="${escapeAttr(h.mapsLink||'')}" placeholder="https://maps.app.goo.gl/...">
+      <button class="btn" id="saveHeroBtn" style="align-self:flex-start;">Guardar</button>
+    </div>
+  `;
+}
+
+async function saveHero(){
+  await window.storage.set('site-hero', JSON.stringify(state.hero || {}), SHARED);
+}
+
+async function saveItems(){
+  await window.storage.set('gift-items', JSON.stringify(state.items), SHARED);
+}
+async function saveAbout(){
+  await window.storage.set('site-about', JSON.stringify(state.about || {}), SHARED);
+}
+
+function escapeHtml(str){
+  return (str||"").replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function escapeAttr(str){ return escapeHtml(str); }
+
+function renderGifts(){
+  const grid = document.getElementById('giftGrid');
+  grid.innerHTML = '';
+  state.items.forEach(item => {
+    const card = document.createElement('div');
+    const remaining = item.quantity - item.claimedBy.length;
+    card.className = 'card' + (remaining <= 0 ? ' taken' : '');
+
+    if(editMode){
+      card.innerHTML = `
+        <div class="edit-row">
+          <input type="text" value="${escapeAttr(item.name)}" data-field="name" data-id="${item.id}" placeholder="Nome do item">
+          <textarea data-field="description" data-id="${item.id}" placeholder="Descrição">${escapeHtml(item.description)}</textarea>
+          <div class="edit-mini-row">
+            <input type="number" value="${item.priceMin}" data-field="priceMin" data-id="${item.id}" placeholder="Preço mín.">
+            <input type="number" value="${item.priceMax}" data-field="priceMax" data-id="${item.id}" placeholder="Preço máx.">
+          </div>
+          <label style="font-family:'Poppins',sans-serif;font-size:.78rem;color:var(--navy-2);">Quantidade (unidades a oferecer)</label>
+          <input type="number" min="1" value="${item.quantity}" data-field="quantity" data-id="${item.id}" placeholder="Quantidade">
+          <input type="text" value="${escapeAttr(item.link||'')}" data-field="link" data-id="${item.id}" placeholder="Link do produto (opcional)">
+          <button class="btn secondary remove-btn" data-id="${item.id}">Remover item</button>
+        </div>`;
+    } else {
+      const claimTags = item.claimedBy.map(name => `
+        <span class="claim-tag">${escapeHtml(name)}<button class="unselect-one" data-id="${item.id}" data-name="${escapeAttr(name)}" title="Desmarcar">×</button></span>
+      `).join('');
+      card.innerHTML = `
+        <h3>${escapeHtml(item.name)}</h3>
+        <div class="desc">${escapeHtml(item.description)}</div>
+        <div class="price">${money(item.priceMin, item.priceMax)}</div>
+        ${item.quantity > 1 ? `<div class="qty-note">Quantidade pretendida: ${item.quantity}${remaining > 0 ? ` — restam ${remaining}` : ''}</div>` : ''}
+        ${item.link ? `<a class="link" href="${escapeAttr(item.link)}" target="_blank" rel="noopener">Ver produto</a>` : ''}
+        <div class="actions">
+          ${claimTags ? `<div class="claim-list">${claimTags}</div>` : ''}
+          ${remaining > 0
+            ? `<button class="btn select-btn" data-id="${item.id}">Vou oferecer isto${item.quantity > 1 ? ` (${remaining} disponíveis)` : ''}</button>`
+            : `<div class="taken-tag">Todas as unidades já foram escolhidas</div>`
+          }
+        </div>`;
+    }
+    grid.appendChild(card);
+  });
+
+  document.getElementById('addGiftCard').classList.toggle('hidden', !editMode);
+  document.getElementById('importRow').classList.toggle('hidden', !editMode);
+
+  // bind events
+  grid.querySelectorAll('.select-btn').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const name = await showModal({
+        title:'O teu nome',
+        message:'Para os outros convidados verem quem escolheu este presente.',
+        withInput:true,
+        inputPlaceholder:'O teu nome',
+        confirmText:'Confirmar'
+      });
+      if(!name) return;
+      const item = state.items.find(i=>i.id===btn.dataset.id);
+      item.claimedBy.push(name);
+      await saveItems();
+      renderGifts();
+      toast('Presente marcado como escolhido — obrigada!');
+    });
+  });
+  grid.querySelectorAll('.unselect-one').forEach(btn=>{
+    btn.addEventListener('click', async ()=>{
+      const ok = await showModal({
+        title: 'Desmarcar presente',
+        message: `Tens a certeza que queres remover "${btn.dataset.name}" da lista de quem escolheu este presente?`,
+        confirmText: 'Remover'
+      });
+      if(!ok) return;
+      const item = state.items.find(i=>i.id===btn.dataset.id);
+      const idx = item.claimedBy.indexOf(btn.dataset.name);
+      if(idx > -1) item.claimedBy.splice(idx, 1);
+      await saveItems();
+      renderGifts();
+    });
+  });
+  if(editMode){
+    grid.querySelectorAll('[data-field]').forEach(el=>{
+      el.addEventListener('change', async ()=>{
+        const item = state.items.find(i=>i.id===el.dataset.id);
+        const field = el.dataset.field;
+        item[field] = (field==='priceMin'||field==='priceMax'||field==='quantity') ? (Number(el.value) || (field==='quantity' ? 1 : 0)) : el.value;
+        await saveItems();
+        toast('Alteração guardada');
+      });
+    });
+    grid.querySelectorAll('.remove-btn').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const ok = await showModal({
+          title:'Remover presente',
+          message:'Tens a certeza que queres remover este item da lista?',
+          confirmText:'Remover'
+        });
+        if(!ok) return;
+        state.items = state.items.filter(i=>i.id!==btn.dataset.id);
+        await saveItems();
+        renderGifts();
+      });
+    });
+  }
+}
+
+document.getElementById('addGiftCard').addEventListener('click', async ()=>{
+  const id = 'g' + Date.now();
+  state.items.push({id, name:'Novo presente', description:'Descrição breve do item.', priceMin:0, priceMax:0, link:'', quantity:1, claimedBy:[]});
+  await saveItems();
+  renderGifts();
+});
+
+document.getElementById('importFileInput').addEventListener('change', async (e)=>{
+  const file = e.target.files[0];
+  if(!file) return;
+  try{
+    const isCsv = /\.csv$/i.test(file.name);
+    let wb;
+    if(isCsv){
+      const text = await file.text();
+      const firstLine = text.split(/\r?\n/)[0] || '';
+      const semicolons = (firstLine.match(/;/g) || []).length;
+      const commas = (firstLine.match(/,/g) || []).length;
+      const delimiter = semicolons > commas ? ';' : ',';
+      wb = XLSX.read(text, { type: 'string', FS: delimiter });
+    } else {
+      const buffer = await file.arrayBuffer();
+      wb = XLSX.read(buffer, { type: 'array' });
+    }
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    const rows = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+    if(!rows.length){
+      toast('Não foram encontrados itens no ficheiro.');
+      e.target.value = '';
+      return;
+    }
+    const newItems = rows.map(rowToItem);
+    const ok = await showModal({
+      title: 'Importar presentes',
+      message: `Foram encontrados ${newItems.length} itens no ficheiro. Adicionar à lista atual?`,
+      confirmText: 'Adicionar'
+    });
+    if(ok){
+      state.items = state.items.concat(newItems);
+      await saveItems();
+      renderGifts();
+      toast('Itens importados com sucesso!');
+    }
+  }catch(err){
+    toast('Não foi possível ler este ficheiro.');
+  }
+  e.target.value = '';
+});
+
+function normalizeKey(str){
+  return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+}
+function getField(normalizedRow, aliases, fallback){
+  for(const a of aliases){
+    if(normalizedRow[a] !== undefined && normalizedRow[a] !== '') return normalizedRow[a];
+  }
+  return fallback;
+}
+function rowToItem(row){
+  const normalized = {};
+  Object.keys(row).forEach(k => { normalized[normalizeKey(k)] = row[k]; });
+  return {
+    id: 'g' + Date.now() + Math.random().toString(36).slice(2,7),
+    name: String(getField(normalized, ['nome','name','item','presente'], 'Novo presente')),
+    description: String(getField(normalized, ['descricao','description','desc'], '')),
+    priceMin: Number(getField(normalized, ['precominimo','pricemin','minimo','min'], 0)) || 0,
+    priceMax: Number(getField(normalized, ['precomaximo','pricemax','maximo','max'], 0)) || 0,
+    link: String(getField(normalized, ['link','url'], '')),
+    quantity: Number(getField(normalized, ['quantidade','quantity','qtd','qty'], 1)) || 1,
+    claimedBy: []
+  };
+}
+
+document.getElementById('gearBtn').addEventListener('click', async ()=>{
+  if(editMode){
+    exitEdit();
+    return;
+  }
+  const pass = await showModal({
+    title:'Modo anfitriã',
+    message:'Introduz o código para editar o site.',
+    withInput:true,
+    inputPlaceholder:'Código',
+    inputType:'password',
+    confirmText:'Entrar'
+  });
+  if(pass === null) return;
+  if(pass === PASSPHRASE){
+    editMode = true;
+    document.getElementById('editBanner').classList.remove('hidden');
+    renderGifts();
+    renderAboutEdit();
+    renderHeroEdit();
+  } else {
+    toast('Código incorreto.');
+  }
+});
+document.getElementById('exitEditBtn').addEventListener('click', exitEdit);
+function exitEdit(){
+  editMode = false;
+  document.getElementById('editBanner').classList.add('hidden');
+  renderGifts();
+  renderAboutView();
+  renderHeroView();
+}
+
+function renderAboutEdit(){
+  const aboutSection = document.getElementById('aboutSection');
+  const a = { ...defaultAbout, ...(state.about || {}) };
+  aboutSection.innerHTML = `
+    <div class="hero-edit edit-row">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Texto sobre o evento</label>
+      <textarea id="editAboutText" rows="4">${escapeHtml(a.text)}</textarea>
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Nota de RSVP</label>
+      <input id="editRsvp" type="text" value="${escapeAttr(a.rsvp)}">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Carregar uma foto (fica guardada no site)</label>
+      <input id="editPhotoFile" type="file" accept="image/*">
+      ${state.photo ? `
+        <div class="photo-preview">
+          <img src="${state.photo}" alt="Pré-visualização">
+          <button class="btn secondary" id="removePhotoBtn" type="button">Remover foto</button>
+        </div>` : ''}
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Ou link de uma foto (só se não carregares um ficheiro acima)</label>
+      <input id="editPhoto" type="text" value="${escapeAttr(a.photo)}" placeholder="https://...">
+      <label style="font-family:'Poppins',sans-serif;font-size:.8rem;color:var(--navy-2);">Texto do rodapé (fim da página)</label>
+      <input id="editFooterText" type="text" value="${escapeAttr(a.footerText)}">
+      <button class="btn" id="saveAboutBtn" style="align-self:flex-start;">Guardar</button>
+    </div>`;
+
+  const fileInput = document.getElementById('editPhotoFile');
+  fileInput.addEventListener('change', async ()=>{
+    const file = fileInput.files[0];
+    if(!file) return;
+    toast('A processar a foto…');
+    try{
+      const dataUrl = await resizeImageToDataUrl(file);
+      await savePhotoChunks(dataUrl);
+      state.photo = dataUrl;
+      toast('Foto guardada!');
+      renderAboutEdit();
+    }catch(err){
+      toast('Não foi possível processar esta imagem.');
+    }
+  });
+  const removeBtn = document.getElementById('removePhotoBtn');
+  if(removeBtn){
+    removeBtn.addEventListener('click', async ()=>{
+      const ok = await showModal({
+        title: 'Remover foto',
+        message: 'Queres remover a foto carregada?',
+        confirmText: 'Remover'
+      });
+      if(!ok) return;
+      await deletePhotoChunks();
+      state.photo = '';
+      renderAboutEdit();
+      toast('Foto removida.');
+    });
+  }
+}
+document.addEventListener('click', async (e)=>{
+  if(e.target && e.target.id === 'saveAboutBtn'){
+    const text = document.getElementById('editAboutText').value;
+    const rsvp = document.getElementById('editRsvp').value;
+    const photo = document.getElementById('editPhoto').value;
+    const footerText = document.getElementById('editFooterText').value;
+    state.about = { text, rsvp, photo, footerText };
+    await saveAbout();
+    toast('Alterações guardadas');
+  }
+  if(e.target && e.target.id === 'saveHeroBtn'){
+    state.hero = {
+      eyebrow: document.getElementById('heroEyebrow').value,
+      title: document.getElementById('heroTitle').value,
+      name: document.getElementById('heroName').value,
+      dateText: document.getElementById('heroDateText').value,
+      timeText: document.getElementById('heroTimeText').value,
+      location: document.getElementById('heroLocation').value,
+      mapsLink: document.getElementById('heroMapsLink').value
+    };
+    await saveHero();
+    toast('Alterações guardadas');
+  }
+  if(e.target && e.target.id === 'importHelpLink'){
+    e.preventDefault();
+    showModal({
+      title: 'Formato do ficheiro',
+      message: 'Cria um Excel (.xlsx) ou CSV com estas colunas (título na primeira linha): Nome, Descrição, Preço mínimo, Preço máximo, Link, Quantidade. Só "Nome" é obrigatória. Se guardares em .xlsx (Excel) não há problemas de acentos nem de separador — é a forma mais simples. Em CSV, tanto vírgula como ponto e vírgula funcionam.',
+      confirmText: 'Entendi'
+    });
+  }
+});
+
+loadState();
+</script>
+</body>
+</html>
