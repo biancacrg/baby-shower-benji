@@ -478,12 +478,14 @@ async function loadPhotoChunks(){
     const countRes = await window.storage.get('site-photo-count', SHARED);
     const count = countRes ? parseInt(countRes.value, 10) : 0;
     if(!count) return '';
-    let combined = '';
+    // Pede todos os pedaços da foto ao mesmo tempo, em vez de um a seguir ao outro —
+    // com várias peças isto pode cortar o tempo de espera para uma fração.
+    const chunkPromises = [];
     for(let i=0; i<count; i++){
-      const chunkRes = await window.storage.get('site-photo-chunk-' + i, SHARED);
-      combined += chunkRes ? chunkRes.value : '';
+      chunkPromises.push(window.storage.get('site-photo-chunk-' + i, SHARED));
     }
-    return combined;
+    const chunkResults = await Promise.all(chunkPromises);
+    return chunkResults.map(r => r ? r.value : '').join('');
   }catch(e){ return ''; }
 }
 
@@ -491,10 +493,42 @@ async function deletePhotoChunks(){
   await window.storage.set('site-photo-count', '0', SHARED);
 }
 
+const CACHE_KEY = 'benjamim-site-cache-v1';
+
+function loadFromCache(){
+  try{
+    const raw = localStorage.getItem(CACHE_KEY);
+    if(!raw) return false;
+    const cached = JSON.parse(raw);
+    state.items = (cached.items || defaultItems).map(normalizeItem);
+    state.about = cached.about || null;
+    state.hero = cached.hero || null;
+    state.photo = cached.photo || '';
+    return true;
+  }catch(e){ return false; }
+}
+
+function saveToCache(){
+  try{
+    localStorage.setItem(CACHE_KEY, JSON.stringify({
+      items: state.items, about: state.about, hero: state.hero, photo: state.photo
+    }));
+  }catch(e){ /* localStorage indisponível (modo privado, quota, etc.) — ignora-se */ }
+}
+
 async function loadState(){
   // O cabeçalho, o texto de introdução e o rodapé já aparecem corretos no HTML estático
   // (ver acima), por isso não há qualquer ecrã de espera para essa parte.
-  // Só a lista de presentes e a foto dependem da Google Sheet, e são pedidas em paralelo.
+
+  // 1) Se este dispositivo já visitou o site antes, mostra imediatamente a última
+  //    lista de presentes e foto conhecidas, em vez de "A carregar…".
+  const hadCache = loadFromCache();
+  if(hadCache){
+    renderGifts();
+    renderAboutView(); // atualiza a foto, se estiver em cache
+  }
+
+  // 2) Em paralelo, confirma junto da Google Sheet se há algo mais recente.
   const [itemsRes, aboutRes, heroRes, photoValue] = await Promise.allSettled([
     window.storage.get('gift-items', SHARED),
     window.storage.get('site-about', SHARED),
@@ -504,21 +538,24 @@ async function loadState(){
 
   state.items = (itemsRes.status === 'fulfilled' && itemsRes.value)
     ? JSON.parse(itemsRes.value.value).map(normalizeItem)
-    : defaultItems;
+    : (hadCache ? state.items : defaultItems);
 
   state.about = (aboutRes.status === 'fulfilled' && aboutRes.value)
     ? JSON.parse(aboutRes.value.value)
-    : null;
+    : (hadCache ? state.about : null);
 
   state.hero = (heroRes.status === 'fulfilled' && heroRes.value)
     ? JSON.parse(heroRes.value.value)
-    : null;
+    : (hadCache ? state.hero : null);
 
-  state.photo = (photoValue.status === 'fulfilled') ? photoValue.value : '';
+  state.photo = (photoValue.status === 'fulfilled' && photoValue.value)
+    ? photoValue.value
+    : (hadCache ? state.photo : '');
 
   renderHeroView();
   renderAboutView();
   renderGifts();
+  saveToCache();
 }
 
 function renderAboutView(){
