@@ -200,26 +200,12 @@
   }
   .toast.show{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
-    .btn, .toast, .loading-overlay{transition:none;}
+    .btn, .toast{transition:none;}
   }
   @media (max-width:600px){
     .hero h1{font-size:2rem;}
     .hero .script{font-size:3.6rem;}
     .details .date-line{font-size:1.2rem;}
-  }
-
-  .loading-overlay{
-    position:fixed;inset:0;background:var(--cream);
-    display:flex;align-items:center;justify-content:center;
-    z-index:200;opacity:1;visibility:visible;
-    transition:opacity .4s ease, visibility .4s ease;
-  }
-  .loading-overlay.hide{opacity:0;visibility:hidden;pointer-events:none;}
-  .loading-content{text-align:center;}
-  .loading-content .bow{width:90px;height:auto;display:block;margin:0 auto;}
-  .loading-text{
-    font-family:'Poppins',sans-serif;font-size:.85rem;color:var(--navy-2);
-    margin-top:8px;letter-spacing:.04em;
   }
 
   .modal-overlay{
@@ -238,22 +224,14 @@
     border:1px solid var(--blue-soft);border-radius:8px;width:100%;margin-bottom:16px;
   }
   .modal-actions{display:flex;gap:10px;justify-content:flex-end;}
+
+  .gift-skeleton{opacity:.4;}
+  .gift-skeleton .desc{
+    background:var(--cream-2);height:12px;border-radius:6px;color:transparent;
+  }
 </style>
 </head>
 <body>
-
-<div class="loading-overlay" id="loadingOverlay">
-  <div class="loading-content">
-    <svg class="bow" viewBox="0 0 140 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-      <path d="M70 42 C 54 14, 16 12, 14 34 C 12 54, 40 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M70 42 C 86 14, 124 12, 126 34 C 128 54, 100 56, 70 42 Z" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
-      <path d="M65 40 C 60 46, 60 52, 64 58" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round"/>
-      <path d="M75 40 C 80 46, 80 52, 76 58" fill="none" stroke="#2c4a6e" stroke-width="3.5" stroke-linecap="round"/>
-      <circle cx="70" cy="41" r="6" fill="#2c4a6e"/>
-    </svg>
-    <div class="loading-text">a preparar a página…</div>
-  </div>
-</div>
 
 <div class="edit-banner hidden" id="editBanner">
   Modo anfitriã ativo — as alterações ficam visíveis para todos
@@ -274,6 +252,7 @@
     <div class="location">
       📍 S'tança Garten — Montijo
     </div>
+    <div class="maps-link"><a href="https://maps.app.goo.gl/QtYDU9SPa4rYdxB5A" target="_blank" rel="noopener">Ver localização no Google Maps →</a></div>
     <div class="rsvp-note" id="aboutRsvp">Por favor, confirma a tua presença até 20 de setembro.</div>
   </header>
 
@@ -290,7 +269,7 @@
   </div>
 
   <section class="about" id="aboutSection">
-    <p id="aboutText">Estamos cheios de alegria à espera do Benjamim, e adoraríamos ter-vos connosco para celebrar este momento. Aqui encontram todos os detalhes do dia e, se quiserem, uma lista de presentes organizada para ajudar quem preferir escolher algo com significado.</p>
+    <p id="aboutText">Estamos muito felizes e ansiosos por conhecer o nosso Benjamim e adoraríamos celebrar este momento tão especial convosco. Neste site encontram todos os detalhes do nosso chá de bebé e, apenas para quem quiser oferecer uma lembrança, preparámos uma lista de presentes para ajudar na escolha. Mas o que mais desejamos é celebrar este dia convosco — a vossa presença neste dia e apoio nesta nova fase será, sem dúvida, o presente mais especial!</p>
   </section>
 
   <div class="photo-wrap" id="photoWrap">
@@ -317,7 +296,11 @@
       <input type="file" id="importFileInput" accept=".xlsx,.xls,.csv" class="hidden">
       <a class="import-help" href="#" id="importHelpLink">Ver formato esperado</a>
     </div>
-    <div class="grid" id="giftGrid"></div>
+    <div class="grid" id="giftGrid">
+      <div class="card gift-skeleton"><h3>A carregar…</h3><div class="desc">&nbsp;</div></div>
+      <div class="card gift-skeleton"><h3>A carregar…</h3><div class="desc">&nbsp;</div></div>
+      <div class="card gift-skeleton"><h3>A carregar…</h3><div class="desc">&nbsp;</div></div>
+    </div>
     <div class="grid" style="margin-top:20px;">
       <div class="add-card edit-only hidden" id="addGiftCard">+ Adicionar presente</div>
     </div>
@@ -392,11 +375,11 @@ const defaultHero = {
   dateText: "04 de outubro de 2026",
   timeText: "das 13h às 19h",
   location: "S'tança Garten — Montijo",
-  mapsLink: ""
+  mapsLink: "https://maps.app.goo.gl/QtYDU9SPa4rYdxB5A"
 };
 
 const defaultAbout = {
-  text: "Estamos cheios de alegria à espera do Benjamim, e adoraríamos ter-vos connosco para celebrar este momento. Aqui encontram todos os detalhes do dia e, se quiserem, uma lista de presentes organizada para ajudar quem preferir escolher algo com significado.",
+  text: "Estamos muito felizes e ansiosos por conhecer o nosso Benjamim e adoraríamos celebrar este momento tão especial convosco. Neste site encontram todos os detalhes do nosso chá de bebé e, apenas para quem quiser oferecer uma lembrança, preparámos uma lista de presentes para ajudar na escolha. Mas o que mais desejamos é celebrar este dia convosco — a vossa presença neste dia e apoio nesta nova fase será, sem dúvida, o presente mais especial!",
   rsvp: "Por favor, confirma a tua presença até 20 de setembro.",
   photo: "",
   footerText: "Com muito carinho, obrigada por fazerem parte deste dia 🤍"
@@ -509,31 +492,33 @@ async function deletePhotoChunks(){
 }
 
 async function loadState(){
-  try{
-    const itemsRes = await window.storage.get('gift-items', SHARED);
-    state.items = (itemsRes ? JSON.parse(itemsRes.value) : defaultItems).map(normalizeItem);
-  }catch(e){ state.items = defaultItems; }
+  // O cabeçalho, o texto de introdução e o rodapé já aparecem corretos no HTML estático
+  // (ver acima), por isso não há qualquer ecrã de espera para essa parte.
+  // Só a lista de presentes e a foto dependem da Google Sheet, e são pedidas em paralelo.
+  const [itemsRes, aboutRes, heroRes, photoValue] = await Promise.allSettled([
+    window.storage.get('gift-items', SHARED),
+    window.storage.get('site-about', SHARED),
+    window.storage.get('site-hero', SHARED),
+    loadPhotoChunks()
+  ]);
 
-  try{
-    const aboutRes = await window.storage.get('site-about', SHARED);
-    state.about = aboutRes ? JSON.parse(aboutRes.value) : null;
-  }catch(e){ state.about = null; }
+  state.items = (itemsRes.status === 'fulfilled' && itemsRes.value)
+    ? JSON.parse(itemsRes.value.value).map(normalizeItem)
+    : defaultItems;
 
-  try{
-    const heroRes = await window.storage.get('site-hero', SHARED);
-    state.hero = heroRes ? JSON.parse(heroRes.value) : null;
-  }catch(e){ state.hero = null; }
+  state.about = (aboutRes.status === 'fulfilled' && aboutRes.value)
+    ? JSON.parse(aboutRes.value.value)
+    : null;
 
-  try{
-    state.photo = await loadPhotoChunks();
-  }catch(e){ state.photo = ''; }
+  state.hero = (heroRes.status === 'fulfilled' && heroRes.value)
+    ? JSON.parse(heroRes.value.value)
+    : null;
+
+  state.photo = (photoValue.status === 'fulfilled') ? photoValue.value : '';
 
   renderHeroView();
   renderAboutView();
   renderGifts();
-
-  const overlay = document.getElementById('loadingOverlay');
-  if(overlay) overlay.classList.add('hide');
 }
 
 function renderAboutView(){
